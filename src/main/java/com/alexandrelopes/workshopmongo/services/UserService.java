@@ -30,6 +30,12 @@ public class UserService {
 		return repo.insert(obj);
 	}
 	
+	public void delete(String id) {
+		//Antes de deletar vamos usar o mesmo método findById desta classa para caso não haver dado com esse id na base lançar a exceção
+		findById(id);
+		repo.deleteById(id);
+	}
+	
 	//Método para instanciar o User a partir do UserDTO aqui e não dentro do proprio User porque aqui temos uma referencia para o banco de dados
 	//e podemos vir a querer utilizar essa referência para poder pegar dados do Usuário que formos instanciar que já estejam no banco
 	public User fromDTO(UserDTO objDto) {

@@ -19,7 +19,7 @@ import com.alexandrelopes.workshopmongo.services.UserService;
 
 @RestController
 @RequestMapping(value="/users")
-public class UserResources {
+public class UserResource {
 	
 	@Autowired
 	private UserService service;
@@ -45,6 +45,12 @@ public class UserResources {
 		//Vamos retornar uma resposta vazia <Void>, porém com uma url do novo recurso criado no cabeçalho
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) /* Também seria possível trocar esta annotation por @GetMapping que daria no mesmo */
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }
