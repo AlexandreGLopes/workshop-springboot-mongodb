@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alexandrelopes.workshopmongo.domain.User;
+import com.alexandrelopes.workshopmongo.dto.UserDTO;
 import com.alexandrelopes.workshopmongo.repository.UserRepository;
 import com.alexandrelopes.workshopmongo.services.exception.ObjectNotFoundException;
 
@@ -25,4 +26,13 @@ public class UserService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));	
 	}
 	
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	//Método para instanciar o User a partir do UserDTO aqui e não dentro do proprio User porque aqui temos uma referencia para o banco de dados
+	//e podemos vir a querer utilizar essa referência para poder pegar dados do Usuário que formos instanciar que já estejam no banco
+	public User fromDTO(UserDTO objDto) {
+		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
+	}
 }
