@@ -47,9 +47,17 @@ public class UserResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) /* Também seria possível trocar esta annotation por @GetMapping que daria no mesmo */
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE) /* Também seria possível trocar esta annotation por @DeleteMapping que daria no mesmo */
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT) /* Também seria possível trocar esta annotation por @PutMapping que daria no mesmo */
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
 

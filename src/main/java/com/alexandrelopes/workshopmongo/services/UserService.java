@@ -36,6 +36,17 @@ public class UserService {
 		repo.deleteById(id);
 	}
 	
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
+
 	//Método para instanciar o User a partir do UserDTO aqui e não dentro do proprio User porque aqui temos uma referencia para o banco de dados
 	//e podemos vir a querer utilizar essa referência para poder pegar dados do Usuário que formos instanciar que já estejam no banco
 	public User fromDTO(UserDTO objDto) {
